@@ -1,19 +1,23 @@
 import spacy
-from ngrams import bigram
+from nltk.corpus import state_union
+from bag_of_words.get_bag_of_words import get_bow
+from nltk.corpus import genesis,gutenberg,abc
 
-# load English model
-nlp = spacy.load('en')
+def main():
+    nlp = spacy.load('en')
 
-# create a document
-doc = nlp("I ordered steak from the butcher.")
+    # Quick run
+    text = genesis.raw("english-kjv.txt")
 
-result = bigram(doc)
+    # Long run
+    # text = ''
+    #for file in state_union.fileids():
+    #     text += state_union.raw(file)
 
-#print("result type: ",type(result))
+    word_count = get_bow(text, nlp)
+    print("The length of the dictionary is:", len(word_count))
 
-for element in result:
-    #print("element type: ",type(element))
-    for token in element:
-        print(token, end=' ')
-        #print("token type: ", type(token))
-    print() #new line
+    for i in word_count:
+        print(i, end='\n')
+
+main()
